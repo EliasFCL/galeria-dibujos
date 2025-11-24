@@ -13,29 +13,32 @@ buttons.forEach(btn => {
     });
 });
 
-// --- Ampliar imagen con botón cerrar ---
-
+// --- Abrir imagen en modal con fondo oscuro ---
 document.querySelectorAll(".gallery img").forEach(img => {
     img.addEventListener("click", () => {
 
-        // Si ya está ampliada, no volver a crear botón
-        if (img.classList.contains("expanded")) return;
+        // Crear overlay
+        const overlay = document.createElement("div");
+        overlay.className = "image-overlay";
 
-        // Añadir clase de imagen ampliada
-        img.classList.add("expanded");
+        // Imagen dentro del overlay
+        const bigImg = document.createElement("img");
+        bigImg.src = img.src;
 
-        // Crear el botón de cerrar
+        // Botón cerrar
         const closeBtn = document.createElement("button");
         closeBtn.innerText = "Cerrar imagen";
-        closeBtn.className = "close-image-btn";
+        closeBtn.className = "close-overlay-btn";
 
-        // Insertar botón después de la imagen
-        img.insertAdjacentElement("afterend", closeBtn);
-
-        // Acción del botón cerrar
+        // Cerrar al presionar el botón
         closeBtn.addEventListener("click", () => {
-            img.classList.remove("expanded");
-            closeBtn.remove();
+            overlay.remove();
         });
+
+        // Insertar elementos
+        overlay.appendChild(bigImg);
+        overlay.appendChild(closeBtn);
+
+        document.body.appendChild(overlay);
     });
 });
